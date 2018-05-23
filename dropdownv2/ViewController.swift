@@ -10,16 +10,47 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var btnDrop: UIButton!
+    @IBOutlet weak var tblView: UITableView!
+    var fruitList = ["Dara1","See2","Welcome3","WeDara4","SeeAgain5"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        tblView.isHidden = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func btnAction(_ sender: Any) {
+        if tblView.isHidden {
+            animat(toogle: true)
+        }else{
+            animat(toogle: false)
+        }
     }
+    func animat(toogle: Bool){
+        if toogle{
+            UIView.animate(withDuration: 0.3) {
+                self.tblView.isHidden = false
+            }
+        }else{
+            UIView.animate(withDuration: 0.3) {
+                self.tblView.isHidden = true
+            }
+        }
+        
+    }
+    
+}
 
-
+extension ViewController: UITableViewDelegate,UITableViewDataSource{
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fruitList.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell",for: indexPath)
+        cell.textLabel?.text = fruitList[indexPath.row]
+        return cell
+    }
+    
+    
 }
 
